@@ -31,9 +31,9 @@ namespace NB.ECS
 
         public IEnumerator<int> GetEnumerator()
         {
-            foreach(var entity in entities)
+            for(int i = 0; i < entityCount; i++)
             {
-                yield return entity;
+                yield return entities[i];
             }
         }
 
@@ -45,7 +45,9 @@ namespace NB.ECS
 
     public static class FilterExtentions
     {
-        public static Filter WithAll<A>(this in Filter filter) where A: struct
+        #region WithAll
+        public static Filter WithAll<A>(this in Filter filter)
+            where A: struct
         {
             var result = new Filter(filter);
             var world = filter.world;
@@ -61,9 +63,129 @@ namespace NB.ECS
             return result;
         }
 
-        public static Filter WithAll<A>(this World world) where A: struct
+        public static Filter WithAll<A, B>(this in Filter filter)
+            where A: struct
+            where B: struct
+        {
+            var result = new Filter(filter);
+            var world = filter.world;
+
+            foreach(var entity in filter)
+            {
+                if (entity.HasAllComponents(world, typeof(A), typeof(B)))
+                {
+                    result.Add(entity);
+                }
+            }
+
+            return result;
+        }
+        
+        public static Filter WithAll<A, B, C>(this in Filter filter)
+            where A: struct
+            where B: struct
+            where C: struct
+        {
+            var result = new Filter(filter);
+            var world = filter.world;
+
+            foreach(var entity in filter)
+            {
+                if (entity.HasAllComponents(world, typeof(A), typeof(B), typeof(C)))
+                {
+                    result.Add(entity);
+                }
+            }
+
+            return result;
+        }
+
+        public static Filter WithAll<A>(this World world)
+            where A: struct
         {
             return new Filter(world).WithAll<A>();
         }
+
+        public static Filter WithAll<A, B>(this World world)
+            where A: struct
+            where B: struct
+        {
+            return new Filter(world).WithAll<A, B>();
+        }
+
+        public static Filter WithAll<A, B, C>(this World world)
+            where A: struct
+            where B: struct
+            where C: struct
+        {
+            return new Filter(world).WithAll<A, B, C>();
+        }
+        #endregion
+    
+        #region WithAny
+        public static Filter WithAny<A>(this in Filter filter)
+            where A: struct
+        {
+            return WithAll<A>(filter);
+        }
+
+        public static Filter WithAny<A, B>(this in Filter filter)
+            where A: struct
+            where B: struct
+        {
+            var result = new Filter(filter);
+            var world = filter.world;
+
+            foreach(var entity in filter)
+            {
+                if (entity.HasAnyComponent(world, typeof(A), typeof(B)))
+                {
+                    result.Add(entity);
+                }
+            }
+
+            return result;
+        }
+
+        public static Filter WithAny<A, B, C>(this in Filter filter)
+            where A: struct
+            where B: struct
+            where C: struct
+        {
+            var result = new Filter(filter);
+            var world = filter.world;
+
+            foreach(var entity in filter)
+            {
+                if (entity.HasAnyComponent(world, typeof(A), typeof(B), typeof(C)))
+                {
+                    result.Add(entity);
+                }
+            }
+
+            return result;
+        }
+
+        public static Filter WithAny<A>(this World world)
+            where A: struct
+        {
+            return new Filter(world).WithAll<A>(); // With all with 1 argument is equal to with any
+        }
+
+        public static Filter WithAny<A, B>(this World world)
+            where A: struct
+            where B: struct
+        {
+            return new Filter(world).WithAny<A, B>();
+        }
+
+        public static Filter WithAny<A, B, C>(this World world)
+            where A: struct
+            where B: struct
+            where C: struct
+        {
+            return new Filter(world).WithAny<A, B, C>();
+        }
+        #endregion
     }
 }

@@ -27,5 +27,33 @@ namespace NB.ECS
             var pool = world.GetPool<T>();
             return pool.Has(entity);
         }
+
+        public static bool HasAllComponents(this in int entity, in World world, params System.Type[] types)
+        {
+            foreach(var type in types)
+            {
+                var pool = world.GetPool(type);
+                if (!pool.Has(entity))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public static bool HasAnyComponent(this in int entity, in World world, params System.Type[] types)
+        {
+            foreach(var type in types)
+            {
+                var pool = world.GetPool(type);
+                if (pool.Has(entity))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

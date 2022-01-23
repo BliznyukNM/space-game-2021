@@ -76,6 +76,16 @@ namespace NB.ECS
             return (Pool<T>) pool;
         }
 
+        internal IPool GetPool(Type type)
+        {
+            if (pools.TryGetValue(type, out var pool))
+            {
+                return pool;
+            }
+
+            throw new Exception($"No such pool {type.Name}, check your code");
+        }
+
         internal int[] GetAllEntities()
         {
             var count = entityCount - recycledEntityCount;
