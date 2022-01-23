@@ -55,5 +55,19 @@ namespace NB.ECS.Test
 
             Assert.AreEqual(3, count);
         }
+
+        [Test]
+        public void OneComponentAWithAnyTest()
+        {
+            var filter = world.WithAny<ComponentA>();
+            var count = 0;
+
+            foreach (var entity in filter)
+            {
+                count++;
+            }
+
+            Assert.AreEqual(2, count);
+        }
     }
 }

@@ -42,7 +42,7 @@ namespace NB.ECS.Test
         }
 
         [Test]
-        public void TwoComponentsWithAllTest()
+        public void ThreeComponentsWithAllTest()
         {
             var filter = world.WithAll<ComponentA, ComponentB, ComponentC>();
             var count = 0;
@@ -56,7 +56,7 @@ namespace NB.ECS.Test
         }
 
         [Test]
-        public void TwoComponentsWithAnyTest()
+        public void ThreeComponentsWithAnyTest()
         {
             var filter = world.WithAny<ComponentA, ComponentB, ComponentC>();
             var count = 0;
@@ -67,6 +67,34 @@ namespace NB.ECS.Test
             }
 
             Assert.AreEqual(7, count);
+        }
+
+        [Test]
+        public void TwoComponentABWithAnyTest()
+        {
+            var filter = world.WithAny<ComponentA, ComponentB>();
+            var count = 0;
+
+            foreach (var entity in filter)
+            {
+                count++;
+            }
+
+            Assert.AreEqual(6, count);
+        }
+
+        [Test]
+        public void TwoComponentABWithAllTest()
+        {
+            var filter = world.WithAll<ComponentA, ComponentB>();
+            var count = 0;
+
+            foreach (var entity in filter)
+            {
+                count++;
+            }
+
+            Assert.AreEqual(2, count);
         }
     }
 }
