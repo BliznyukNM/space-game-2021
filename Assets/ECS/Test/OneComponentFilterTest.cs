@@ -9,6 +9,7 @@ namespace NB.ECS.Test
     public class OneComponentFilterTest
     {
         private struct ComponentA {}
+        private struct ComponentB {}
 
         private World world;
 
@@ -48,6 +49,20 @@ namespace NB.ECS.Test
             }
 
             Assert.AreEqual(1, count);
+        }
+
+        [Test]
+        public void OneComponentNotExistWithAnyTest()
+        {
+            var filter = world.WithAny<ComponentB>();
+            var count = 0;
+
+            foreach (var entity in filter)
+            {
+                count++;
+            }
+
+            Assert.AreEqual(0, count);
         }
     }
 }

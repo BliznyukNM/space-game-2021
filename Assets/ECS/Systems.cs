@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace NB.ECS
 {
@@ -8,17 +6,17 @@ namespace NB.ECS
 
     public interface IStartSystem: ISystem
     {
-        void Start(World world);
+        void OnStart(World world);
     }
 
     public interface IUpdateSystem: ISystem
     {
-        void Update(World world);
+        void OnUpdate(World world);
     }
 
     public interface IStopSystem: ISystem
     {
-        void Stop(World world);
+        void OnStop(World world);
     }
 
     public class Systems
@@ -40,7 +38,7 @@ namespace NB.ECS
 
             if (system is IStartSystem startSystem && IsRunning)
             {
-                startSystem.Start(world);
+                startSystem.OnStart(world);
             }
 
             return this;
@@ -52,7 +50,7 @@ namespace NB.ECS
             {
                 if (system is IStartSystem startSystem)
                 {
-                    startSystem.Start(world);
+                    startSystem.OnStart(world);
                 }
             });
             IsRunning = true;
@@ -64,7 +62,7 @@ namespace NB.ECS
             {
                 if (system is IUpdateSystem updateSystem)
                 {
-                    updateSystem.Update(world);
+                    updateSystem.OnUpdate(world);
                 }
             });
         }
@@ -75,7 +73,7 @@ namespace NB.ECS
             {
                 if (system is IStopSystem stopSystem)
                 {
-                    stopSystem.Stop(world);
+                    stopSystem.OnStop(world);
                 }
             });
             IsRunning = false;

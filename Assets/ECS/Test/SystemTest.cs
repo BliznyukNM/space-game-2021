@@ -6,12 +6,12 @@ namespace NB.ECS.Test
     {
         private class TestSystem : IStartSystem, IUpdateSystem, IStopSystem
         {
-            public void Start(World world)
+            public void OnStart(World world)
             {
                 Assert.Pass();
             }
 
-            public void Update(World world)
+            public void OnUpdate(World world)
             {
                 Assert.Pass();
                 /*
@@ -24,7 +24,7 @@ namespace NB.ECS.Test
                 */
             }
 
-            public void Stop(World world)
+            public void OnStop(World world)
             {
                 Assert.Pass();
             }

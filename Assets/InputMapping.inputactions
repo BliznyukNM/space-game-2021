@@ -1,0 +1,66 @@
+{
+    "name": "InputMapping",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "8b9baf8b-4475-463a-af0b-5939518c0ca5",
+            "actions": [
+                {
+                    "name": "Forward",
+                    "type": "Button",
+                    "id": "2dc5bff2-1c6b-498f-976b-1f7efd6785a5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "09979f5c-cbd9-4003-a45e-642c2507fdba",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4a47116e-d940-4ca2-9b5e-7e512c77793d",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Forward",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17c6b2e8-3603-466c-b2e0-f31b69e6a613",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Keyboard",
+            "bindingGroup": "Keyboard",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

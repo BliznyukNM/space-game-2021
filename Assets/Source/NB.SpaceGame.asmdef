@@ -1,0 +1,17 @@
+{
+    "name": "NB.SpaceGame",
+    "rootNamespace": "NB.SpaceGame",
+    "references": [
+        "GUID:bd373332cd7504f31bcc410fba23b6b0",
+        "GUID:678d7224137b44222b9ffccdab7cc37d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
