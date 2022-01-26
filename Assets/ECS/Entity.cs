@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace NB.ECS
 {
     public static class Entity

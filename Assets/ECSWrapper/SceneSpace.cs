@@ -21,7 +21,12 @@ namespace NB.ECS.Wrapper
 
         private void Update()
         {
-            Systems.Update();
+            Systems.Update(Time.deltaTime);
+        }
+
+        private void FixedUpdate()
+        {
+            Systems.PhysicsUpdate(Time.fixedDeltaTime);
         }
 
         private void OnDestroy()

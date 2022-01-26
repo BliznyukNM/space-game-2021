@@ -11,7 +11,12 @@ namespace NB.ECS
 
     public interface IUpdateSystem: ISystem
     {
-        void OnUpdate(World world);
+        void OnUpdate(World world, float delta);
+    }
+
+    public interface IPhysicsUpdateSystem: ISystem
+    {
+        void OnPhysicsUpdate(World world, float delta);
     }
 
     public interface IStopSystem: ISystem
@@ -56,13 +61,24 @@ namespace NB.ECS
             IsRunning = true;
         }
 
-        public void Update()
+        public void Update(float delta)
         {
             systems.ForEach(system =>
             {
                 if (system is IUpdateSystem updateSystem)
                 {
-                    updateSystem.OnUpdate(world);
+                    updateSystem.OnUpdate(world, delta);
+                }
+            });
+        }
+
+        public void PhysicsUpdate(float delta)
+        {
+            systems.ForEach(system =>
+            {
+                if (system is IPhysicsUpdateSystem updateSystem)
+                {
+                    updateSystem.OnPhysicsUpdate(world, delta);
                 }
             });
         }

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace NB.ECS
 {
@@ -45,8 +44,7 @@ namespace NB.ECS
 
     public static class FilterExtentions
     {
-        #region WithAll
-        public static Filter WithAll<A>(this in Filter filter)
+        public static Filter With<A>(this in Filter filter)
             where A: struct
         {
             var result = new Filter(filter);
@@ -61,6 +59,12 @@ namespace NB.ECS
             }
 
             return result;
+        }
+
+        public static Filter With<A>(this World world)
+            where A: struct
+        {
+            return new Filter(world).With<A>();
         }
 
         public static Filter WithAll<A, B>(this in Filter filter)
@@ -100,12 +104,6 @@ namespace NB.ECS
             return result;
         }
 
-        public static Filter WithAll<A>(this World world)
-            where A: struct
-        {
-            return new Filter(world).WithAll<A>();
-        }
-
         public static Filter WithAll<A, B>(this World world)
             where A: struct
             where B: struct
@@ -119,14 +117,6 @@ namespace NB.ECS
             where C: struct
         {
             return new Filter(world).WithAll<A, B, C>();
-        }
-        #endregion
-    
-        #region WithAny
-        public static Filter WithAny<A>(this in Filter filter)
-            where A: struct
-        {
-            return WithAll<A>(filter);
         }
 
         public static Filter WithAny<A, B>(this in Filter filter)
@@ -166,12 +156,6 @@ namespace NB.ECS
             return result;
         }
 
-        public static Filter WithAny<A>(this World world)
-            where A: struct
-        {
-            return new Filter(world).WithAll<A>(); // With all with 1 argument is equal to with any
-        }
-
         public static Filter WithAny<A, B>(this World world)
             where A: struct
             where B: struct
@@ -186,6 +170,5 @@ namespace NB.ECS
         {
             return new Filter(world).WithAny<A, B, C>();
         }
-        #endregion
     }
 }

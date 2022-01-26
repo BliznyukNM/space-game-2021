@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace NB.ECS.Test
 {
@@ -24,9 +20,9 @@ namespace NB.ECS.Test
         }
 
         [Test]
-        public void OneComponentWithAllTest()
+        public void OneComponentWithTest()
         {
-            var filter = world.WithAll<ComponentA>();
+            var filter = world.With<ComponentA>();
             var count = 0;
 
             foreach (var entity in filter)
@@ -38,23 +34,9 @@ namespace NB.ECS.Test
         }
 
         [Test]
-        public void OneComponentWithAnyTest()
+        public void OneComponentNotExistWithTest()
         {
-            var filter = world.WithAny<ComponentA>();
-            var count = 0;
-
-            foreach (var entity in filter)
-            {
-                count++;
-            }
-
-            Assert.AreEqual(1, count);
-        }
-
-        [Test]
-        public void OneComponentNotExistWithAnyTest()
-        {
-            var filter = world.WithAny<ComponentB>();
+            var filter = world.With<ComponentB>();
             var count = 0;
 
             foreach (var entity in filter)

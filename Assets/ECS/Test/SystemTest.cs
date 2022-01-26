@@ -11,7 +11,7 @@ namespace NB.ECS.Test
                 Assert.Pass();
             }
 
-            public void OnUpdate(World world)
+            public void OnUpdate(World world, float delta)
             {
                 Assert.Pass();
                 /*
@@ -51,7 +51,7 @@ namespace NB.ECS.Test
         {
             var systems = new Systems(world)
                 .Register(new TestSystem());
-            systems.Update();
+            systems.Update(0.0f);
         }
 
         [Test]

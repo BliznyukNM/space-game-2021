@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace NB.ECS.Test
 {
@@ -57,9 +53,9 @@ namespace NB.ECS.Test
         }
 
         [Test]
-        public void OneComponentAWithAnyTest()
+        public void OneComponentAWithTest()
         {
-            var filter = world.WithAny<ComponentA>();
+            var filter = world.With<ComponentA>();
             var count = 0;
 
             foreach (var entity in filter)
