@@ -1,12 +1,16 @@
 using NB.ECS;
-using NB.ECS.Wrapper;
 using UnityEngine;
 
 namespace NB.SpaceGame.Physics.NewtonLaw
 {
-    public class GravitySystem : SceneSystem, IPhysicsUpdateSystem
+    public class GravitySystem : IPhysicsUpdateSystem
     {
-        [SerializeField] private float G = 9.81f;
+        public GravitySystem(float G)
+        {
+            this.G = G;
+        }
+
+        private float G = 0.01f;
 
         public void OnPhysicsUpdate(World world, float delta)
         {
@@ -28,7 +32,6 @@ namespace NB.SpaceGame.Physics.NewtonLaw
                     var pos2 = celestial.GetComponent<Position>(world).value;
                     var mass = celestial.GetComponent<Mass>(world).value;
                     var acceleration = CalculateAcceleration(pos1, pos2, mass);
-                    Debug.Log(acceleration);
                     velocity.value += acceleration * delta;
                 }
             }
