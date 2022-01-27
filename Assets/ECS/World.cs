@@ -83,7 +83,7 @@ namespace NB.ECS
                 return pool;
             }
 
-            throw new Exception($"No such pool {type.Name}, check your code");
+            return null;
         }
 
         internal int[] GetAllEntities()

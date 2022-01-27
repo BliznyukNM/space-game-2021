@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace NB.ECS.Test
 {
-    public class SystemTest
+    public class SystemTest: BaseTest
     {
         private class TestSystem : IStartSystem, IUpdateSystem, IStopSystem
         {
@@ -28,14 +28,6 @@ namespace NB.ECS.Test
             {
                 Assert.Pass();
             }
-        }
-
-        private World world;
-
-        [SetUp]
-        public void CreateWorld()
-        {
-            world = new World();
         }
 
         [Test]

@@ -31,7 +31,7 @@ namespace NB.ECS
             foreach(var type in types)
             {
                 var pool = world.GetPool(type);
-                if (!pool.Has(entity))
+                if (pool == null || !pool.Has(entity))
                 {
                     return false;
                 }

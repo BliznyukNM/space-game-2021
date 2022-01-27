@@ -2,7 +2,7 @@ using NB.ECS;
 using NB.ECS.Wrapper;
 using UnityEngine;
 
-namespace NB.SpaceGame.NewtonLaw
+namespace NB.SpaceGame.Physics.NewtonLaw
 {
     public class GravitySystem : SceneSystem, IPhysicsUpdateSystem
     {
@@ -10,12 +10,12 @@ namespace NB.SpaceGame.NewtonLaw
 
         public void OnPhysicsUpdate(World world, float delta)
         {
-            var bodies = world.WithAll<Velocity, Position, Body>();
+            var bodies = world.WithAll<Position, Velocity, Body>();
             var celestials = bodies.With<Mass>();
 
             foreach (var body in bodies)
             {
-                ref var acceleration = ref body.GetComponent<Velocity>(world);
+                ref var velocity = ref body.GetComponent<Velocity>(world);
                 var pos1 = body.GetComponent<Position>(world).value;
 
                 foreach (var celestial in celestials)
@@ -25,9 +25,11 @@ namespace NB.SpaceGame.NewtonLaw
                         continue;
                     }
 
-                    var pos2 = body.GetComponent<Position>(world).value;
-                    var mass = body.GetComponent<Mass>(world).value;
-                    acceleration.value += CalculateAcceleration(pos1, pos2, mass) * delta;
+                    var pos2 = celestial.GetComponent<Position>(world).value;
+                    var mass = celestial.GetComponent<Mass>(world).value;
+                    var acceleration = CalculateAcceleration(pos1, pos2, mass);
+                    Debug.Log(acceleration);
+                    velocity.value += acceleration * delta;
                 }
             }
         }
@@ -36,7 +38,7 @@ namespace NB.SpaceGame.NewtonLaw
         {
             var sqrDistance = Mathf.Pow(pos1.x - pos2.x, 2) + Mathf.Pow(pos1.y - pos2.y, 2);
             var direction = pos2 - pos1;
-            return direction * G * mass / sqrDistance;
+            return direction * (G * mass / sqrDistance);
         }
     }
 }

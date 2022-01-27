@@ -2,19 +2,10 @@ using NUnit.Framework;
 
 namespace NB.ECS.Test
 {
-    public class EntityTest
+    public class EntityTest: BaseTest
     {
-        private World world;
-
-        [SetUp]
-        public void CreateWorld()
-        {
-            world = new World();
-        }
-
         [Test]
-        public void CreateEntityTest()
-        {
+        public void CreateEntityTest() {
             var entity = world.CreateEntity();
             Assert.GreaterOrEqual(entity, 0);
         }

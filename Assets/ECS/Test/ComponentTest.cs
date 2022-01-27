@@ -2,20 +2,12 @@ using NUnit.Framework;
 
 namespace NB.ECS.Test
 {
-    public class ComponentTest
+    public class ComponentTest: BaseTest
     {
         private struct TestComponent
         {
             public int a;
             public string b;
-        }
-
-        private World world;
-
-        [SetUp]
-        public void CreateWorld()
-        {
-            world = new World();
         }
         
         [Test]
