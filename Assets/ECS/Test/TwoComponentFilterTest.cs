@@ -2,67 +2,43 @@ using NUnit.Framework;
 
 namespace NB.ECS.Test
 {
-    public class TwoComponentFilterTest
+    public class TwoComponentFilterTest: BaseTest
     {
-        private struct ComponentA {}
-        private struct ComponentB {}
-
-        private World world;
-
-        [SetUp]
-        public void CreateWorld()
-        {
-            world = new World();
-
-            var e1 = world.CreateEntity();
-            var e2 = world.CreateEntity();
-            e2.AddComponent(world, new ComponentA());
-            var e3 = world.CreateEntity();
-            e3.AddComponent(world, new ComponentB());
-            var e4 = world.CreateEntity();
-            e4.AddComponent(world, new ComponentA());
-            e4.AddComponent(world, new ComponentB());
-        }
-
         [Test]
         public void TwoComponentWithAllTest()
         {
+            CreateEntity<ComponentA>();
+            CreateEntity<ComponentA, ComponentB>();
+            CreateEntity<ComponentB, ComponentC>();
             var filter = world.WithAll<ComponentA, ComponentB>();
-            var count = 0;
-
-            foreach (var entity in filter)
-            {
-                count++;
-            }
-
+            var count = GetObjectsCount(filter);
             Assert.AreEqual(1, count);
         }
 
         [Test]
         public void TwoComponentWithAnyTest()
         {
+            CreateEntity<ComponentC>();
+            CreateEntity<ComponentA>();
+            CreateEntity<ComponentA, ComponentB>();
+            CreateEntity();
+            CreateEntity<ComponentB, ComponentC>();
             var filter = world.WithAny<ComponentA, ComponentB>();
-            var count = 0;
-
-            foreach (var entity in filter)
-            {
-                count++;
-            }
-
+            var count = GetObjectsCount(filter);
             Assert.AreEqual(3, count);
         }
 
         [Test]
-        public void OneComponentAWithTest()
+        public void TwoComponentsSequentialWithAllWithAnyTest()
         {
-            var filter = world.With<ComponentA>();
-            var count = 0;
-
-            foreach (var entity in filter)
-            {
-                count++;
-            }
-
+            CreateEntity<ComponentA>();
+            CreateEntity<ComponentA, ComponentB>();
+            CreateEntity<ComponentA, ComponentB, ComponentD>();
+            CreateEntity<ComponentB, ComponentC, ComponentD>();
+            CreateEntity<ComponentB, ComponentC, ComponentA>();
+            CreateEntity<ComponentD, ComponentC, ComponentA>();
+            var filter = world.WithAll<ComponentA, ComponentB>().WithAny<ComponentC, ComponentD>();
+            var count = GetObjectsCount(filter);
             Assert.AreEqual(2, count);
         }
     }

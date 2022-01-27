@@ -28,6 +28,11 @@ namespace NB.ECS
 
         public int Add(int entity, object data)
         {
+            if (entityComponentBinds[entity] >= 0)
+            {
+                return entityComponentBinds[entity];
+            }
+
             int id;
 
             if (recycledComponentCount > 0)

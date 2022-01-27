@@ -19,6 +19,15 @@ namespace NB.ECS.Test
         }
 
         [Test]
+        public void AddTwoSameComponentsTest()
+        {
+            var entity = world.CreateEntity();
+            var c1 = entity.AddComponent(world, new ComponentA());
+            var c2 = entity.AddComponent(world, new ComponentA());
+            Assert.AreEqual(c1, c2);
+        }
+
+        [Test]
         public void HasComponentTest()
         {
             var entity = world.CreateEntity();

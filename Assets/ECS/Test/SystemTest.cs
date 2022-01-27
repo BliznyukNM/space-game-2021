@@ -4,7 +4,7 @@ namespace NB.ECS.Test
 {
     public class SystemTest: BaseTest
     {
-        private class TestSystem : IStartSystem, IUpdateSystem, IStopSystem
+        private class TestSystem : IStartSystem, IUpdateSystem, IPhysicsUpdateSystem, IStopSystem
         {
             public void OnStart(World world)
             {
@@ -14,14 +14,11 @@ namespace NB.ECS.Test
             public void OnUpdate(World world, float delta)
             {
                 Assert.Pass();
-                /*
-                var filter = world.WithAll<A, B, C>().WithAny<D>().WithNone<E>();
-                for (var entity: filter)
-                {
-                    ref var b = ref entity.GetComponent<B>(world);
-                    b.data++;
-                }
-                */
+            }
+
+            public void OnPhysicsUpdate(World world, float delta)
+            {
+                Assert.Pass();
             }
 
             public void OnStop(World world)
@@ -44,6 +41,14 @@ namespace NB.ECS.Test
             var systems = new Systems(world)
                 .Register(new TestSystem());
             systems.Update(0.0f);
+        }
+
+        [Test]
+        public void PhysicsUpdateSystemsTest()
+        {
+            var systems = new Systems(world)
+                .Register(new TestSystem());
+            systems.PhysicsUpdate(0.0f);
         }
 
         [Test]
