@@ -7,6 +7,7 @@ namespace NB.ECS.Test
         protected struct ComponentA {}
         protected struct ComponentB {}
         protected struct ComponentC {}
+        protected struct ComponentD {}
 
         protected World world;
 

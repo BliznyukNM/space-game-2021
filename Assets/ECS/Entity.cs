@@ -2,10 +2,10 @@ namespace NB.ECS
 {
     public static class Entity
     {
-        public static void AddComponent<T>(this int entity, World world, in T component) where T: struct
+        public static int AddComponent<T>(this int entity, World world, in T component) where T: struct
         {
             var pool = world.GetPool<T>();
-            pool.Add(entity, component);
+            return pool.Add(entity, component);
         }
 
         public static ref T GetComponent<T>(this int entity, World world) where T: struct
@@ -14,10 +14,10 @@ namespace NB.ECS
             return ref pool.Get(entity);
         }
         
-        public static void RemoveComponent<T>(this int entity, World world) where T: struct
+        public static bool RemoveComponent<T>(this int entity, World world) where T: struct
         {
             var pool = world.GetPool<T>();
-            pool.Remove(entity);
+            return pool.Remove(entity);
         }
 
         public static bool HasComponent<T>(this int entity, World world) where T: struct

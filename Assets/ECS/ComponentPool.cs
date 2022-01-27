@@ -2,10 +2,10 @@ namespace NB.ECS
 {
     internal interface IPool
     {
-        void Add(int entity, object data);
+        int Add(int entity, object data);
         void Set(int entity, object data);
         bool Has(int entity);
-        void Remove(int entity);
+        bool Remove(int entity);
     }
 
     internal class Pool<T> : IPool where T : struct
@@ -26,7 +26,7 @@ namespace NB.ECS
             System.Array.Fill(entityComponentBinds, -1);
         }
 
-        public void Add(int entity, object data)
+        public int Add(int entity, object data)
         {
             int id;
 
@@ -42,12 +42,19 @@ namespace NB.ECS
             entityComponentBinds[entity] = id;
             ref var component = ref components[id];
             component = (T) data;
+            return id;
         }
 
-        public void Remove(int entity)
+        public bool Remove(int entity)
         {
+            if (entityComponentBinds[entity] < 0)
+            {
+                return false;
+            }
+
             recycledComponents[recycledComponentCount++] = entityComponentBinds[entity];
             entityComponentBinds[entity] = -1;
+            return true;
         }
 
         public bool Has(int entity)
@@ -57,6 +64,11 @@ namespace NB.ECS
 
         public ref T Get(int entity)
         {
+            if (entityComponentBinds[entity] < 0)
+            {
+                throw new System.InvalidOperationException($"No component {typeof(T).Name} for entity {entity}");
+            }
+
             return ref components[entityComponentBinds[entity]];
         }
 
