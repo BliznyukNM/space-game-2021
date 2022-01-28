@@ -15,15 +15,18 @@ namespace NB.SpaceGame
             OnUpdate
         }
 
+        [SerializeField] private StarSystemData data;
         [SerializeField] private int simulationSteps;
         [SerializeField] private float deltaTime;
         [SerializeField] private float G;
         [SerializeField] private PlanetBuilder relativeTo;
         [SerializeField] private UpdateType updateType;
+        [SerializeField] private float scale = 1; // km in 1 unit
 
         private World world;
         private Systems systems;
         private Vector2[,] drawPositions;
+        private Color[] trailColors;
 
         private void CalculateTrajectories()
         {
@@ -32,9 +35,11 @@ namespace NB.SpaceGame
 
             var bodies = FindObjectsOfType<PlanetBuilder>();
             drawPositions = new Vector2[simulationSteps, bodies.Length];
-            foreach (var body in bodies)
+            trailColors = new Color[bodies.Length];
+            for (int i = 0; i < bodies.Length; i++)
             {
-                body.Register(world);
+                trailColors[i] = bodies[i].trailDebugColor;
+                bodies[i].Register(world, scale);
             }
 
             var relativeBodyInitPos = relativeTo != null ? relativeTo.Entity.GetComponent<Position>(world).value : Vector2.zero;
@@ -76,7 +81,7 @@ namespace NB.SpaceGame
             var bodies = FindObjectsOfType<PlanetBuilder>();
             foreach (var body in bodies)
             {
-                body.Register(world);
+                body.Register(world, scale);
             }
             systems.Start();
             CalculateTrajectories();
@@ -101,7 +106,7 @@ namespace NB.SpaceGame
             {
                 for (int j = 0; j < drawPositions.GetLength(1); j++)
                 {
-                    Debug.DrawLine(drawPositions[i, j], drawPositions[i + 1, j], Color.blue);
+                    Debug.DrawLine(drawPositions[i, j], drawPositions[i + 1, j], trailColors[j]);
                 }
             }
         }

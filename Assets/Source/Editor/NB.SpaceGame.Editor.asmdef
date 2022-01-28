@@ -1,0 +1,18 @@
+{
+    "name": "NB.SpaceGame.Editor",
+    "rootNamespace": "NB.SpaceGame.Editor",
+    "references": [
+        "GUID:2e667636db0f04048ab80f66785c6cf1"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

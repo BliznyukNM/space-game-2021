@@ -21,6 +21,8 @@ namespace NB.SpaceGame
 
         [SerializeField] private Texture2D texture;
 
+        public Color trailDebugColor = Color.white;
+
         private bool updateShape;
 
         public int Entity { get; private set; }
@@ -39,7 +41,7 @@ namespace NB.SpaceGame
             }
         }
 
-        public void Register(World world)
+        public void Register(World world, float scale)
         {
             Entity = world.CreateEntity();
             Entity.AddComponent(world, new Position { value = transform.position });

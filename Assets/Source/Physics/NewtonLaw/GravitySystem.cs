@@ -14,13 +14,13 @@ namespace NB.SpaceGame.Physics.NewtonLaw
 
         public void OnPhysicsUpdate(World world, float delta)
         {
-            var bodies = world.WithAll<Position, Velocity, Body>();
+            var bodies = world.WithAll<Kilometers, Velocity, Body>();
             var celestials = bodies.With<Mass>();
 
             foreach (var body in bodies)
             {
                 ref var velocity = ref body.GetComponent<Velocity>(world);
-                var pos1 = body.GetComponent<Position>(world).value;
+                var pos1 = body.GetComponent<Kilometers>(world);
 
                 foreach (var celestial in celestials)
                 {
@@ -29,9 +29,9 @@ namespace NB.SpaceGame.Physics.NewtonLaw
                         continue;
                     }
 
-                    var pos2 = celestial.GetComponent<Position>(world).value;
+                    var pos2 = celestial.GetComponent<Kilometers>(world);
                     var mass = celestial.GetComponent<Mass>(world).value;
-                    var acceleration = CalculateAcceleration(pos1, pos2, mass);
+                    var acceleration = CalculateAcceleration(pos1.ToMetersVector2(), pos2.ToMetersVector2(), mass);
                     velocity.value += acceleration * delta;
                 }
             }
@@ -40,8 +40,8 @@ namespace NB.SpaceGame.Physics.NewtonLaw
         private Vector2 CalculateAcceleration(Vector2 pos1, Vector2 pos2, float mass)
         {
             var sqrDistance = Mathf.Pow(pos1.x - pos2.x, 2) + Mathf.Pow(pos1.y - pos2.y, 2);
-            var direction = pos2 - pos1;
-            return direction * (G * mass / sqrDistance);
+            var direction = (pos2 - pos1).normalized;
+            return direction * G * mass / sqrDistance;
         }
     }
 }
